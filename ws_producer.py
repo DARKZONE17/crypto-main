@@ -31,7 +31,7 @@ def create_topic():
         'bootstrap.servers' : 'localhost:9092'
     })
     topic = NewTopic(
-        topic = f"{'env_id'}_crypto-dlq",
+        topic = "crypto-dlq",
         num_partitions=5,
         replication_factor=1
     )
@@ -152,7 +152,7 @@ async def connect_and_stream():
 
                             # Sending the Data to Kafka Topic
                             producer.produce(
-                                topic = 'crypto-topic',
+                                topic = "crypto-topic",
                                 key = coin.encode(),
                                 value = payload,
                                 callback = delivery_report
