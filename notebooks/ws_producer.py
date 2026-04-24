@@ -8,7 +8,10 @@ from confluent_kafka import Producer
 from confluent_kafka.admin import AdminClient, NewTopic
 from pydantic import BaseModel, ValidationError
 import logging 
+import os
 
+KAFKA_TOPIC = os.environ["KAFKA_TOPIC"]
+KAFKA_TOPIC_DLQ = os.environ["KAFKA_TOPIC_DLQ"]
 
 logging.basicConfig( 
     level=logging.INFO, 
@@ -31,7 +34,7 @@ def create_topic():
         'bootstrap.servers' : 'localhost:9092'
     })
     topic = NewTopic(
-        topic = "crypto-dlq",
+        topic = KAFKA_TOPIC_DLQ,
         num_partitions=5,
         replication_factor=1
     )
@@ -68,7 +71,7 @@ def send_to_dlq(message,e,key,retries):
     error_event = build_error_event(message,e,retries)
     
     producer.produce(
-        topic = "crypto-dlq",
+        topic = KAFKA_TOPIC_DLQ,
         key = key.encode('utf-8'),
         value = json.dumps(error_event).encode('utf-8'),
         callback= delivery_report
@@ -152,7 +155,7 @@ async def connect_and_stream():
 
                             # Sending the Data to Kafka Topic
                             producer.produce(
-                                topic = "crypto-topic",
+                                topic = KAFKA_TOPIC,
                                 key = coin.encode(),
                                 value = payload,
                                 callback = delivery_report

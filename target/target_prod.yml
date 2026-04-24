@@ -1,0 +1,8 @@
+targets:
+  dev:
+    mode: production
+
+    variables:
+      env: prod
+      kafka_topic: prod_crypto-topic
+      kafka_topic_dlq: prod_crypto-dlq

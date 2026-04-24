@@ -1,0 +1,8 @@
+targets:
+  dev:
+    mode: uat
+
+    variables:
+      env: uat
+      kafka_topic: uat_crypto-topic
+      kafka_topic_dlq: uat_crypto-dlq

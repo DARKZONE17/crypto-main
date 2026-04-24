@@ -1,4 +1,8 @@
-kafka:
-  bootstrap_servers: "localhost:9092"
-  main_topic: "dev_crypto-topic"
-  dlq_topic: "dev_crypto-dlq"
+targets:
+  dev:
+    mode: development
+
+    variables:
+      env: dev
+      kafka_topic: dev_crypto-topic
+      kafka_topic_dlq: dev_crypto-dlq
