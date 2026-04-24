@@ -1,0 +1,35 @@
+bundle:
+  name: crypto_pipeline
+
+include:
+  - notebooks/*
+
+resources:
+  jobs:
+    crypto_etl_job:
+      name: crypto-etl-job-${bundle.target}
+
+      tasks:
+
+        - task_key: producer
+          python_file_task:
+            python_file: notebooks/ws_producer.py
+
+        - task_key: consumer
+          depends_on:
+            - task_key: producer
+          python_file_task:
+            python_file: notebooks/consumer.py
+
+        - task_key: etl
+          depends_on:
+            - task_key: consumer
+          python_file_task:
+            python_file: notebooks/etl_logic.py
+
+      job_clusters:
+        - job_cluster_key: main_cluster
+          new_cluster:
+            spark_version: 15.4.x-scala2.12
+            node_type_id: Standard_DS3_v2
+            num_workers: 1
