@@ -1,3 +1,5 @@
+%pip install websockets confluent-kafka pydantic
+
 import asyncio
 import json, time
 import websockets
@@ -10,8 +12,11 @@ from pydantic import BaseModel, ValidationError
 import logging 
 import os
 
-KAFKA_TOPIC = os.environ["KAFKA_TOPIC"]
-KAFKA_TOPIC_DLQ = os.environ["KAFKA_TOPIC_DLQ"]
+# KAFKA_TOPIC = os.environ["KAFKA_TOPIC"]
+# KAFKA_TOPIC_DLQ = os.environ["KAFKA_TOPIC_DLQ"]
+
+KAFKA_TOPIC = "test_crypto-topic"
+KAFKA_TOPIC_DLQ = "test_crypto-topic-dlq"
 
 logging.basicConfig( 
     level=logging.INFO, 

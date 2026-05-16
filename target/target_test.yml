@@ -1,0 +1,8 @@
+targets:
+  dev:
+    mode: test
+
+    variables:
+      env: test
+      kafka_topic: test_crypto-topic
+      kafka_topic_dlq: test_crypto-dlq
