@@ -1,5 +1,3 @@
-%pip install websockets confluent-kafka pydantic
-
 import asyncio
 import json, time
 import websockets
